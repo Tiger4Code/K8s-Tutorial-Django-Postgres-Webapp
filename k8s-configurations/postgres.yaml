@@ -25,6 +25,9 @@ spec:
             secretKeyRef: 
               name: postgres-secrets-file
               key: POSTGRES_PASSWORD
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-storage
         resources:
           requests:
             memory: "256Mi"  # Minimum memory guaranteed
@@ -32,6 +35,10 @@ spec:
           limits:
             memory: "512Mi"  # Maximum memory allowed
             cpu: "500m"      # Maximum CPU allowed
+      volumes:  # This was misplaced; it belongs here
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
 ---
 apiVersion: v1
 kind: Service
