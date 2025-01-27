@@ -1,0 +1,66 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+terraform.rc
+*.tfvars
+*.tfvars.json
+
+# Kubernetes
+*.kubeconfig
+*.yaml.swp
+.helm/
+.kustomize/
+*.out
+
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+*.sqlite3
+*.log
+*.pot
+*.py[co]
+local_settings.py
+media/
+staticfiles/
+.env
+*.env
+venv/
+env/
+instance/
+.mypy_cache/
+.pytest_cache/
+.DS_Store
+.idea/
+.vscode/
+
+# HTML Application
+node_modules/
+dist/
+*.log
+*.bak
+.DS_Store
+coverage/
+.env
+.env.local
+.env.*.local
+.cache/
+out/
+*.tmp
+
+# General
+*.swp
+*.bak
+*.tmp
+*.orig
+*.rej
+*.sublime-workspace
+*.sublime-project
+
+
+README.txt
