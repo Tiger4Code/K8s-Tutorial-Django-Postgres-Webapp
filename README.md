@@ -67,8 +67,8 @@ Then run the SQL commands:
 
 Then apply the web application deployment and service files:
 
-```bash 
-    kubectl apply -f webapp.yaml
+    ```bash 
+        kubectl apply -f webapp.yaml
 
 
 ### 4. **Troubleshooting**:
