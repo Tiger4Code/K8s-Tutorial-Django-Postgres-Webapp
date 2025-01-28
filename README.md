@@ -2,6 +2,10 @@
 
 This project demonstrates how to deploy a Django web application with a PostgreSQL database on a Kubernetes cluster using Minikube. It covers the basics of Kubernetes components and the necessary configurations for deploying and managing web apps and databases on Kubernetes.
 
+
+![Kubernetes Architecture](images/webapp-k8s-architecture.png)
+
+
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Prerequisites](#prerequisites)
