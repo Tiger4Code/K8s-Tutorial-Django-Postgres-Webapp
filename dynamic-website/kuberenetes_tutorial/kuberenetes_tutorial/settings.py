@@ -81,6 +81,7 @@ WSGI_APPLICATION = 'kuberenetes_tutorial.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
