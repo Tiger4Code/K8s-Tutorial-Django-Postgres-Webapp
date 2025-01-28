@@ -62,18 +62,18 @@ To deploy the Django app and PostgreSQL database on Minikube:
 
 Then run the SQL commands:
 
-    ```sql
-    CREATE DATABASE ktutorial_db;
-    GRANT ALL PRIVILEGES ON DATABASE ktutorial_db TO postgres;
+   ```bash 
+   CREATE DATABASE ktutorial_db;
+   GRANT ALL PRIVILEGES ON DATABASE ktutorial_db TO postgres;
 
 
 Then apply the web application deployment and service files:
 
-    ```bash 
-        kubectl apply -f webapp.yaml
+   ```bash 
+   kubectl apply -f webapp.yaml
 
 
-### 4. **Troubleshooting**:
+4. **Troubleshooting**:
 If you face any issues, check the logs of the PostgreSQL or web app pods using:
 
     ```bash
