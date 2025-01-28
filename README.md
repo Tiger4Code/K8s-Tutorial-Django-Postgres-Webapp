@@ -43,11 +43,11 @@ To follow along with this tutorial, you will need the following:
 
 Apply the PostgreSQL-related YAML files first:
 
-    ```bash
-    kubectl apply -f postgres-secret.yaml
-    kubectl apply -f postgres-config-map.yaml
-    kubectl apply -f postgres-pvc.yaml
-    kubectl apply -f postgres.yaml
+   ```bash
+   kubectl apply -f postgres-secret.yaml
+   kubectl apply -f postgres-config-map.yaml
+   kubectl apply -f postgres-pvc.yaml
+   kubectl apply -f postgres.yaml
 
 To deploy the Django app and PostgreSQL database on Minikube:
 
