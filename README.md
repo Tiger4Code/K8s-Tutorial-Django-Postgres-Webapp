@@ -88,7 +88,7 @@ The following Kubernetes configuration files are used to deploy and manage the w
 4. **postgres.yaml**: Defines the PostgreSQL deployment and service.
 5. **webapp.yaml**: Defines the Django web application deployment and service, as well as the environment variables to connect to PostgreSQL.
 
-For detailed explanations, refer to the [Kubernetes Configuration Section](#kubernetes-configuration-files).
+For detailed explanations, refer to the LinkedIn Article: [Learning Kubernetes through Example (Part 1/3): K8s Configuration Files, Webapp, and Minikube Setup]
 
  
 
