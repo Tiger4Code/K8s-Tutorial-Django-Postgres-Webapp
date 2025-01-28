@@ -74,8 +74,8 @@ Then apply the web application deployment and service files:
 ### 4. **Troubleshooting**:
 If you face any issues, check the logs of the PostgreSQL or web app pods using:
 
-```bash
-kubectl logs <pod-name>
+    ```bash
+    kubectl logs <pod-name>
 
 
 ## Kubernetes Configuration Files
