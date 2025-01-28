@@ -7,10 +7,6 @@ This project demonstrates how to deploy a Django web application with a PostgreS
 - [Prerequisites](#prerequisites)
 - [Setup Instructions](#setup-instructions)
 - [Kubernetes Configuration Files](#kubernetes-configuration-files)
-- [Deployment Instructions](#deployment-instructions)
-- [Caveats](#caveats)
-- [Next Steps](#next-steps)
-- [GitHub Repository](#github-repository)
 
 ## Project Overview
 This project includes the following components:
