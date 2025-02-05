@@ -1,0 +1,48 @@
+name: Build and Deploy to ECR
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dynamic-website/kuberenetes_tutorial/**'  # Watches this folder for changes
+
+permissions:
+  id-token: write  # Required for OIDC authentication with AWS
+  contents: read
+
+jobs:
+  build-and-deploy:
+    name: Build & Push Docker Image to ECR
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}  # Use secret for AWS region
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}  # Use secret for ECR repository name
+      IMAGE_TAG: ${{ github.sha }}  # Use GitHub SHA for image tagging
+      ROLE_NAME: GITHUB-ACTIONS-K8S-TUTORIAL-ROLE
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME}}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, Tag & Push Docker Image
+        run: |
+          docker build -t $ECR_REPOSITORY:$IMAGE_TAG ./dynamic-website/kuberenetes_tutorial
+          docker tag $ECR_REPOSITORY:$IMAGE_TAG ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Deploy to Kubernetes (Optional)
+        run: |
+          echo "Updating deployment with new image..."
+          kubectl set image deployment/your-app your-app-container=${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG --namespace=your-namespace
