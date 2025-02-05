@@ -2,9 +2,8 @@ module "ecr" {
   source  = "terraform-aws-modules/ecr/aws"
   version = "~> 2.3.1"
 
-  for_each = var.ecr_repositories
 
-  repository_name = "${var.environment}/${each.value}"
+  repository_name = "${var.environment}/${var.ecr_repository}"
 
   repository_lifecycle_policy = jsonencode({
     rules = [
