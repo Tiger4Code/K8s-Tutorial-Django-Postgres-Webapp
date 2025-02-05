@@ -43,7 +43,13 @@ jobs:
           docker tag $ECR_REPOSITORY:$IMAGE_TAG ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
           docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Deploy to Kubernetes (Optional)
-        run: |
-          echo "Updating deployment with new image..."
-          kubectl set image deployment/your-app your-app-container=${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG --namespace=your-namespace
+      # - name: Deploy to Kubernetes
+      #   run: |
+      #     echo "Updating deployment with new image..."
+      #     kubectl set image deployment/webapp-deployment k8s-tutorial=${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG --namespace=your-namespace
+          
+      #     echo "Verifying rollout status..."
+      #     kubectl rollout status deployment/webapp-deployment --namespace=default
+          
+      #     echo "Fetching updated pods..."
+      #     kubectl get pods --namespace=default
