@@ -3,7 +3,7 @@ module "ecr" {
   version = "~> 2.3.1"
 
 
-  repository_name = "${var.environment}/${var.ecr_repository}"
+  repository_name = "${var.ecr_repository}"
   repository_type = "public"
 
   repository_lifecycle_policy = jsonencode({
