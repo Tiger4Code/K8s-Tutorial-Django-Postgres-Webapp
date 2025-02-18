@@ -14,3 +14,8 @@ output "aws_region" {
 output "ecr_repo_name" {
   value = module.ecr.repository_name
 }
+
+
+output "docker_img_name" {
+  value = local.timestamp_tag
+}
