@@ -19,7 +19,7 @@ jobs:
 
     env:
       AWS_REGION: us-east-1  # Public ECR is only available in us-east-1
-      #ECR_PUBLIC_REGISTRY: ${{ secrets.ECR_PUBLIC_REGISTRY }}  # Public ECR registry alias
+      ECR_PUBLIC_REGISTRY_ALIAS: ${{ secrets.ECR_PUBLIC_REGISTRY_ALIAS }}  # Public ECR registry alias
       ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}  # Use secret for ECR repository name
       IMAGE_TAG: ${{ secrets.DOCKER_IMG_TAG }}  # Timestamp-based tag
       ROLE_NAME: GITHUB-ACTIONS-K8S-TUTORIAL-ROLE
@@ -37,19 +37,19 @@ jobs:
       - name: Login to Public Amazon ECR
         id: login-ecr
         run: |
-          aws ecr-public get-login-password --region us-east-1 | \
-          docker login --username AWS --password-stdin public.ecr.aws/${{ env.ECR_PUBLIC_REGISTRY }}
+          aws ecr-public get-login-password --region ${{ env.AWS_REGION }} | \
+          docker login --username AWS --password-stdin public.ecr.aws/${{ env.ECR_PUBLIC_REGISTRY_ALIAS }}
 
       - name: Build, Tag & Push Docker Image
         run: |
           set -x  # Enable command printing
-          docker build -t public.ecr.aws/$ECR_REPOSITORY:$IMAGE_TAG ./dynamic-website/kuberenetes_tutorial
-          docker push public.ecr.aws/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG ./dynamic-website/kuberenetes_tutorial
+          docker push public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
 
       # - name: Deploy to Kubernetes (Optional)
       #   run: |
       #     echo "Updating deployment with new image..."
-      #     kubectl set image deployment/webapp-deployment k8s-tutorial=public.ecr.aws/${{ env.ECR_PUBLIC_REGISTRY }}/$ECR_REPOSITORY:$IMAGE_TAG --namespace=your-namespace
+      #     kubectl set image deployment/webapp-deployment k8s-tutorial=public.ecr.aws/${{ env.ECR_PUBLIC_REGISTRY_ALIAS }}/$ECR_REPOSITORY:$IMAGE_TAG --namespace=your-namespace
           
       #     echo "Verifying rollout status..."
       #     kubectl rollout status deployment/webapp-deployment --namespace=default
