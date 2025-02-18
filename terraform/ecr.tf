@@ -4,6 +4,7 @@ module "ecr" {
 
 
   repository_name = "${var.environment}/${var.ecr_repository}"
+  repository_type = "public"
 
   repository_lifecycle_policy = jsonencode({
     rules = [
