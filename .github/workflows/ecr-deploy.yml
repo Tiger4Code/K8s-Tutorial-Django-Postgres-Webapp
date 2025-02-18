@@ -42,7 +42,6 @@ jobs:
 
       - name: Build, Tag & Push Docker Image
         run: |
-          set -x  # Enable command printing
           docker build -t public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG ./dynamic-website/kuberenetes_tutorial
           docker push public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
 
