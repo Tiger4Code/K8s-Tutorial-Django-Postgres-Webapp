@@ -20,7 +20,7 @@ jobs:
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}  # Use secret for AWS region
       ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}  # Use secret for ECR repository name
-      IMAGE_TAG: ${{ github.sha }}  # Use GitHub SHA for image tagging
+      IMAGE_TAG: ${{ secrets.DOCKER_IMG_TAG }}  #  timestamp tag
       ROLE_NAME: GITHUB-ACTIONS-K8S-TUTORIAL-ROLE
 
     steps:
