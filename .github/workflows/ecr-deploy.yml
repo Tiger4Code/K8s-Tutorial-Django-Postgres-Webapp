@@ -44,14 +44,3 @@ jobs:
         run: |
           docker build -t public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG ./dynamic-website/kuberenetes_tutorial
           docker push public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG
-
-      # - name: Deploy to Kubernetes (Optional)
-      #   run: |
-      #     echo "Updating deployment with new image..."
-      #     kubectl set image deployment/webapp-deployment k8s-tutorial=public.ecr.aws/${{ env.ECR_PUBLIC_REGISTRY_ALIAS }}/$ECR_REPOSITORY:$IMAGE_TAG --namespace=your-namespace
-          
-      #     echo "Verifying rollout status..."
-      #     kubectl rollout status deployment/webapp-deployment --namespace=default
-          
-      #     echo "Fetching updated pods..."
-      #     kubectl get pods --namespace=default
