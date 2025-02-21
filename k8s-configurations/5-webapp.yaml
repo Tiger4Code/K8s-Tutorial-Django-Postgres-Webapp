@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: k8s-tutorial
-        image: public.ecr.aws/324234324/test/k8s-tutorial:v3 # IMAGE NO LONGER EXIST! Build, push image and use it.
+        image: public.ecr.aws/n6v5e8w2/tiger4code/k8s-tutorial:v3 # IMAGE NO LONGER EXIST! Build, push image and use it.
         ports:
         - containerPort: 8000 # Django app
         env: 
