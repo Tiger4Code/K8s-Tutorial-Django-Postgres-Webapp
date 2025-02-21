@@ -1,4 +1,4 @@
-name: Build and Deploy to ECR
+name: Build and Deploy to Public ECR
 
 on:
   workflow_dispatch:
@@ -14,13 +14,14 @@ permissions:
 
 jobs:
   build-and-deploy:
-    name: Build & Push Docker Image to ECR
+    name: Build & Push Docker Image to Public ECR
     runs-on: ubuntu-latest
 
     env:
-      AWS_REGION: ${{ secrets.AWS_REGION }}  # Use secret for AWS region
+      AWS_REGION: us-east-1  # Public ECR is only available in us-east-1
+      ECR_PUBLIC_REGISTRY_ALIAS: ${{ secrets.ECR_PUBLIC_REGISTRY_ALIAS }}  # Public ECR registry alias
       ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}  # Use secret for ECR repository name
-      IMAGE_TAG: ${{ github.sha }}  # Use GitHub SHA for image tagging
+      IMAGE_TAG: ${{ secrets.DOCKER_IMG_TAG }}  # Timestamp-based tag
       ROLE_NAME: GITHUB-ACTIONS-K8S-TUTORIAL-ROLE
 
     steps:
@@ -33,23 +34,13 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ env.ROLE_NAME}}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Login to Amazon ECR
+      - name: Login to Public Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        run: |
+          aws ecr-public get-login-password --region ${{ env.AWS_REGION }} | \
+          docker login --username AWS --password-stdin public.ecr.aws/${{ env.ECR_PUBLIC_REGISTRY_ALIAS }}
 
       - name: Build, Tag & Push Docker Image
         run: |
-          docker build -t $ECR_REPOSITORY:$IMAGE_TAG ./dynamic-website/kuberenetes_tutorial
-          docker tag $ECR_REPOSITORY:$IMAGE_TAG ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
-          docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
-
-      # - name: Deploy to Kubernetes
-      #   run: |
-      #     echo "Updating deployment with new image..."
-      #     kubectl set image deployment/webapp-deployment k8s-tutorial=${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG --namespace=your-namespace
-          
-      #     echo "Verifying rollout status..."
-      #     kubectl rollout status deployment/webapp-deployment --namespace=default
-          
-      #     echo "Fetching updated pods..."
-      #     kubectl get pods --namespace=default
+          docker build -t public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG ./dynamic-website/kuberenetes_tutorial
+          docker push public.ecr.aws/$ECR_PUBLIC_REGISTRY_ALIAS/$ECR_REPOSITORY:$IMAGE_TAG

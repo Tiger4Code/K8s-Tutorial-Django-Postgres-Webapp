@@ -32,3 +32,17 @@ variable "eks_node_instance_type" {
 
   default = null
 }
+
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+
+  default = null
+}
+
+variable "private_subnet_id" {
+  description = "Private Subnet ID"
+  type        = string
+
+  default = null
+}

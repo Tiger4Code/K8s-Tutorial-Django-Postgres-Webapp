@@ -9,6 +9,8 @@ override.tf.json
 terraform.rc
 *.tfvars
 *.tfvars.json
+*.backend.tf
+backend.tf
 
 # Kubernetes
 *.kubeconfig
@@ -65,3 +67,6 @@ out/
 
 README.txt
 FILE-STRUCTURE.txt
+
+temp-noor/
+
